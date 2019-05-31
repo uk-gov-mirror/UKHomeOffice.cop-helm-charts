@@ -19,31 +19,34 @@ spec:
         app.kubernetes.io/name: {{ include "formbuilder.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
         prometheus.io/scrape: "true"
+      annotations:
+        checksum/config: {{ include (print .Template.BasePath "/conifg/cappConfig.json") . | sha256sum }}
     spec:
       containers:
-        - name: builder
-          image: "{{ .Values.formbuilder.image.repository }}:{{ .Values.formbuilder.image.tag }}"
-          imagePullPolicy: {{ .Values.formbuilder.image.pullPolicy }}
-          securityContext:
-            runAsUser: 1000
-            runAsNonRoot: true
-          ports:
-            - name: http
-              containerPort: 8101
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /healthz
-              port: 8101
-          readinessProbe:
-            httpGet:
-              path: /readiness
-              port: 8101
-          resources:
-            {{- toYaml .Values.formbuilder.resources | nindent 12 }}
+      - name: builder
+        image: "{{ .Values.formbuilder.image.repository }}:{{ .Values.formbuilder.image.tag }}"
+        imagePullPolicy: {{ .Values.formbuilder.image.pullPolicy }}
+        securityContext:
+          runAsUser: 1000
+          runAsNonRoot: true
+          volumeMounts:
+          - name: config-volume
+            mountPath: /config
+        ports:
+          - name: http
+            containerPort: 8101
+            protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8101
+        readinessProbe:
+          httpGet:
+            path: /readiness
+            port: 8101
+        resources:
+          {{- toYaml .Values.formbuilder.resources | nindent 10 }}
       {{- with .Values.formbuilder.nodeSelector }}
-      imagePullSecrets:
-        - name: {{ .Values.formbuilder.imageCredentials.name }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
@@ -55,3 +58,9 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
     {{- end }}
+      imagePullSecrets:
+      - name: {{ .Values.formbuilder.imageCredentials.name }}
+      volumes:
+      - name: config-volume
+        configMap:
+          name: {{ template "formbuilder.fullname" . }}
