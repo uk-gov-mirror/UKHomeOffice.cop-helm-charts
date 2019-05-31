@@ -19,8 +19,6 @@ spec:
         app.kubernetes.io/name: {{ include "formbuilder.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
         prometheus.io/scrape: "true"
-      annotations:
-        checksum/config: {{ include (print .Template.BasePath "/conifg/cappConfig.json") . | sha256sum }}
     spec:
       containers:
       - name: builder
@@ -29,21 +27,24 @@ spec:
         securityContext:
           runAsUser: 1000
           runAsNonRoot: true
-          volumeMounts:
-          - name: config-volume
-            mountPath: /config
+        volumeMounts:
+        - name: config-volume
+          mountPath: /config
         ports:
           - name: http
-            containerPort: 8101
+            containerPort: {{ .Values.formbuilder.service.targetport }}
             protocol: TCP
         livenessProbe:
           httpGet:
             path: /healthz
-            port: 8101
+            port: {{ .Values.formbuilder.service.targetport }}
         readinessProbe:
           httpGet:
             path: /readiness
-            port: 8101
+            port: {{ .Values.formbuilder.service.targetport }}
+        env:
+          - name: PORT
+            value: {{ .Values.formbuilder.service.targetport }}
         resources:
           {{- toYaml .Values.formbuilder.resources | nindent 10 }}
       {{- with .Values.formbuilder.nodeSelector }}
