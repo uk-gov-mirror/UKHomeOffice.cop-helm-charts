@@ -1,8 +1,13 @@
 formbuilder:
   replicaCount: 1
+  imageCredentials:
+    name: formbuilder-credentials
+    registry: index.docker.io
+    username: username
+    password: password
   image:
-    repository: docker/
-    tag: stable
+    repository: digitalpatterns/form-builder
+    tag: latest
     pullPolicy: Always
   nameOverride: ""
   fullnameOverride: ""
@@ -20,7 +25,7 @@ formbuilder:
   resources: {}
   service:
     type: ClusterIP
-    port: http
+    port: 80
     targetPort: 8101
   ingress:
     enabled: false

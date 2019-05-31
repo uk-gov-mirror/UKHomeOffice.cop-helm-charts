@@ -42,6 +42,8 @@ spec:
           resources:
             {{- toYaml .Values.formbuilder.resources | nindent 12 }}
       {{- with .Values.formbuilder.nodeSelector }}
+      imagePullSecrets:
+        - name: {{ .Values.formbuilder.imageCredentials.name }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
