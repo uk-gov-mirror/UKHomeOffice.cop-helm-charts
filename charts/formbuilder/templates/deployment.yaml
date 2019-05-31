@@ -32,19 +32,19 @@ spec:
           mountPath: /config
         ports:
           - name: http
-            containerPort: {{ .Values.formbuilder.service.targetport }}
+            containerPort: {{ .Values.formbuilder.service.targetPort }}
             protocol: TCP
         livenessProbe:
           httpGet:
             path: /healthz
-            port: {{ .Values.formbuilder.service.targetport }}
+            port: {{ .Values.formbuilder.service.targetPort }}
         readinessProbe:
           httpGet:
             path: /readiness
-            port: {{ .Values.formbuilder.service.targetport }}
+            port: {{ .Values.formbuilder.service.targetPort }}
         env:
           - name: PORT
-            value: {{ .Values.formbuilder.service.targetport }}
+            value: {{ .Values.formbuilder.service.targetPort }}
         resources:
           {{- toYaml .Values.formbuilder.resources | nindent 10 }}
       {{- with .Values.formbuilder.nodeSelector }}

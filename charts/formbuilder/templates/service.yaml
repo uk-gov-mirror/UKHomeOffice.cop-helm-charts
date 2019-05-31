@@ -20,7 +20,7 @@ spec:
   ports:
     - name: http
       port: {{ $service.port }}
-      targetPort: {{ $service.targetport }}
+      targetPort: {{ $service.targetPort }}
     {{- if and (eq "NodePort" $service.type) $service.nodePort }}
       nodePort: {{ $service.nodePort }}
     {{- end }}
