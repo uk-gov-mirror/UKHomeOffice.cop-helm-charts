@@ -1,0 +1,30 @@
+{{- $service := .Values.formio-builder.service -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "formio-builder.fullname" . }}
+{{- with $service.annotations }}
+  annotations:
+{{ toYaml . | indent 4 }}
+{{- end }}
+  labels:
+    app: {{ template "formio-builder.name" . }}
+    chart: {{ template "formio-builder.chart" . }}
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+{{- with $service.labels }}
+{{ toYaml . | indent 4 }}
+{{- end }}
+spec:
+  type: {{ $service.type }}
+  ports:
+    - name: http
+      port: {{ $service.port }}
+      targetPort: {{ $service.targetport }}
+    {{- if and (eq "NodePort" $service.type) $service.nodePort }}
+      nodePort: {{ $service.nodePort }}
+    {{- end }}
+      protocol: TCP
+  selector:
+    app: {{ template "formio-builder.name" . }}
+    release: "{{ .Release.Name }}"
