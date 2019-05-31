@@ -2,10 +2,10 @@
 apiVersion: extensions/v1beta1
 kind: NetworkPolicy
 metadata:
-  name: {{ include "form-builder.fullname" . }}
+  name: {{ include "formbuilder.fullname" . }}
   labels:
-    app.kubernetes.io/name: {{ include "form-builder.name" . }}
-    helm.sh/chart: {{ include "form-builder.chart" . }}
+    app.kubernetes.io/name: {{ include "formbuilder.name" . }}
+    helm.sh/chart: {{ include "formbuilder.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
@@ -17,11 +17,11 @@ spec:
           matchLabels:
             name: ingress-external
       ports:
-        - port: {{ .Values.formio-builder.service.targetPort }}
+        - port: {{ .Values.formbuilder.service.targetPort }}
           protocol: TCP
   podSelector:
     matchLabels:
-      name: {{ include "form-builder.fullname" . }}
+      name: {{ include "formbuilder.fullname" . }}
   policyTypes:
     - Ingress
     - Egress

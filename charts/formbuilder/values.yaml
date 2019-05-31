@@ -1,0 +1,14 @@
+formbuilder:
+  replicaCount: 1
+  image:
+    repository: docker/
+    tag: stable
+    pullPolicy: Always
+  nameOverride: ""
+  fullnameOverride: ""
+  service:
+    type: ClusterIP
+    port: http
+    targetPort: 8101
+  ingress:
+    enabled: false

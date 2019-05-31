@@ -1,16 +1,16 @@
-{{- $ingress := .Values.formio-builder.ingress -}}
+{{- $ingress := .Values.formbuilder.ingress -}}
 {{- if $ingress.enabled -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ template "formio-builder.fullname" . }}
+  name: {{ template "formbuilder.fullname" . }}
 {{- with $ingress.annotations }}
   annotations:
 {{ toYaml . | indent 4 }}
 {{- end }}
   labels:
-    app: {{ template "formio-builder.name" . }}
-    chart: {{ template "formio-builder.chart" . }}
+    app: {{ template "formbuilder.name" . }}
+    chart: {{ template "formbuilder.chart" . }}
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
 {{- with $ingress.labels }}
@@ -34,7 +34,7 @@ spec:
         paths:
           - path: {{ $ingress.path }}
             backend:
-              serviceName: {{ template "formio-builder.fullname" $ }}
+              serviceName: {{ template "formbuilder.fullname" $ }}
               servicePort: http
   {{- end }}
 {{- end -}}

@@ -1,15 +1,15 @@
-{{- $service := .Values.formio-builder.service -}}
+{{- $service := .Values.formbuilder.service -}}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "formio-builder.fullname" . }}
+  name: {{ template "formbuilder.fullname" . }}
 {{- with $service.annotations }}
   annotations:
 {{ toYaml . | indent 4 }}
 {{- end }}
   labels:
-    app: {{ template "formio-builder.name" . }}
-    chart: {{ template "formio-builder.chart" . }}
+    app: {{ template "formbuilder.name" . }}
+    chart: {{ template "formbuilder.chart" . }}
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 {{- with $service.labels }}
@@ -26,5 +26,5 @@ spec:
     {{- end }}
       protocol: TCP
   selector:
-    app: {{ template "formio-builder.name" . }}
+    app: {{ template "formbuilder.name" . }}
     release: "{{ .Release.Name }}"
