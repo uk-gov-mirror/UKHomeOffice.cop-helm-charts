@@ -1,13 +1,9 @@
-{{- $highAvailability := gt (int .Values.formbuilder.replicas) 1 -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "formbuilder.fullname" . }}
+  name: formbuilder
   labels:
-    app: {{ template "formbuilder.name" . }}
-    chart: {{ template "formbuilder.chart" . }}
-    release: "{{ .Release.Name }}"
-    heritage: "{{ .Release.Service }}"
+    app: formbuilder
 data:
   appConfig.json: |
     {
