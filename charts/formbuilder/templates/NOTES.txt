@@ -40,3 +40,6 @@ Form Builder can be accessed:
 {{- end }}
 
 {{- end }}
+
+Before the service will start you need to add a config using the sample-appConfig.json as a secret:
+kubectl create secret generic {{ template "formbuilder.fullname" . }} --from-file=./appConfig.json

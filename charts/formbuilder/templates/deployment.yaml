@@ -44,7 +44,7 @@ spec:
             port: {{ .Values.formbuilder.service.targetPort }}
         env:
           - name: PORT
-            value: {{ .Values.formbuilder.service.targetPort }}
+            value: "{{ .Values.formbuilder.service.targetPort }}"
         resources:
           {{- toYaml .Values.formbuilder.resources | nindent 10 }}
       {{- with .Values.formbuilder.nodeSelector }}
@@ -63,5 +63,5 @@ spec:
       - name: {{ .Values.formbuilder.imageCredentials.name }}
       volumes:
       - name: config-volume
-        configMap:
-          name: {{ template "formbuilder.fullname" . }}
+        secret:
+          secretName: {{ template "formbuilder.fullname" . }}

@@ -9,10 +9,10 @@ metadata:
 {{ toYaml . | indent 4 }}
 {{- end }}
   labels:
-    app: {{ template "formbuilder.name" . }}
-    chart: {{ template "formbuilder.chart" . }}
-    heritage: {{ .Release.Service }}
-    release: {{ .Release.Name }}
+    app.kubernetes.io/name: {{ include "formbuilder.name" . }}
+    helm.sh/chart: {{ include "formbuilder.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- with $ingress.labels }}
 {{ toYaml . | indent 4 }}
 {{- end }}

@@ -1,0 +1,42 @@
+{
+  "environments": [
+    {
+      "id": "dev",
+      "label": "Development",
+      "url": "https://formio.example.com",
+      "description": "Dev environment",
+      "service": {
+        "formio": {
+          "username": "service@example.com",
+          "password": "secret"
+        },
+        "keycloak": {
+          "tokenUrl": "https://keycloak.example.com/auth/realms/dev/protocol/openid-connect/token",
+          "clientId": "formbuilder",
+          "secret": "d79dcb80-XX3c-45af-00OO-674f4f067950"
+        }
+      },
+      "editable": true,
+    "variable-replacements": [
+      {
+        "{$.environmentContext.platformDataUrl}": "http://www.google.co.uk"
+      },
+      {
+        "{$.staffDetailsContext.staffId}": "{{guid}}"
+      },
+      {
+        "{$.keycloakContext.givenName}": "{{firstName}}"
+      },
+      {
+        "{$.keycloakContext.familyName}": "{{lastName}}"
+      }
+    ]
+    }
+  ],
+  "gov-uk-enabled" : true,
+  "keycloak": {
+    "authUrl": "https://keycloak.example.com/auth",
+    "clientId": "platform-ui",
+    "realm": "dev"
+  }
+}
