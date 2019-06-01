@@ -2,19 +2,16 @@
 apiVersion: v1
 kind: Service
 metadata:
-  app.kubernetes.io/name: {{ include "formbuilder.name" . }}
-  helm.sh/chart: {{ include "formbuilder.chart" . }}
-  app.kubernetes.io/instance: {{ .Release.Name }}
-  app.kubernetes.io/managed-by: {{ .Release.Service }}
+  name: {{ template "formbuilder.fullname" . }}
 {{- with $service.annotations }}
   annotations:
 {{ toYaml . | indent 4 }}
 {{- end }}
   labels:
-    app: {{ template "formbuilder.name" . }}
-    chart: {{ template "formbuilder.chart" . }}
-    release: "{{ .Release.Name }}"
-    heritage: "{{ .Release.Service }}"
+    app.kubernetes.io/name: {{ include "formbuilder.name" . }}
+    helm.sh/chart: {{ include "formbuilder.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- with $service.labels }}
 {{ toYaml . | indent 4 }}
 {{- end }}
