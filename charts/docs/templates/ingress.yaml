@@ -6,6 +6,12 @@ metadata:
   name: {{ template "docs.fullname" . }}
 {{- with $ingress.annotations }}
   annotations:
+    ingress.kubernetes.io/proxy-read-timeout: "3600"
+    ingress.kubernetes.io/proxy-send-timeout: "3600"
+    ingress.kubernetes.io/force-ssl-redirect: "true"
+    kubernetes.io/tls-acme: "true"
+    kubernetes.io/ssl-redirect: "true"
+    ingress.kubernetes.io/ssl-redirect: "true"
 {{ toYaml . | indent 4 }}
 {{- end }}
   labels:

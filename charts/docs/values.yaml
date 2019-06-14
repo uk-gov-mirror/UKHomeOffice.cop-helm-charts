@@ -19,6 +19,7 @@ docs:
 
   ingress:
     enabled: false
+    secure: false
     namespace: nginx-external
     annotations: {}
     labels: {}
