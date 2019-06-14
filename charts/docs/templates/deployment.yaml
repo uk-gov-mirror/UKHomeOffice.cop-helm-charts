@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "docs.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "docs.name" . }}
+    helm.sh/chart: {{ include "docs.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.docs.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "docs.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "docs.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        prometheus.io/scrape: "true"
+    spec:
+      containers:
+      - name: builder
+        image: "{{ .Values.docs.image.repository }}:{{ .Values.docs.image.tag }}"
+        imagePullPolicy: {{ .Values.docs.image.pullPolicy }}
+        securityContext:
+          runAsUser: 1000
+          runAsNonRoot: true

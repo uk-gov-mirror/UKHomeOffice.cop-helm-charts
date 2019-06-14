@@ -3,40 +3,90 @@
     {
       "id": "dev",
       "label": "Development",
-      "url": "https://formio.example.com",
-      "description": "Dev environment",
+      "url": "https://formio.elf79.dev",
+      "description": "Elf Dev environment",
       "service": {
         "formio": {
-          "username": "service@example.com",
+          "username": "me@lodev.xyz",
           "password": "secret"
         },
         "keycloak": {
-          "tokenUrl": "https://keycloak.example.com/auth/realms/dev/protocol/openid-connect/token",
-          "clientId": "formbuilder",
-          "secret": "d79dcb80-XX3c-45af-00OO-674f4f067950"
+          "tokenUrl": "https://keycloak.elf79.dev/auth/realms/elf/protocol/openid-connect/token",
+          "clientId": "form-builder",
+          "secret": "d78fcb80-ff1b-45af-be99-674f4f067950"
         }
       },
       "editable": true,
-    "variable-replacements": [
-      {
-        "{$.environmentContext.platformDataUrl}": "http://www.google.co.uk"
+      "variable-replacements": [
+        {
+          "{$.environmentContext.operationalDataUrl}": "https://private-postgrest.dev.cop.homeoffice.gov.uk"
+        },
+        {
+          "{$.environmentContext.referenceDataUrl}": "https://api.refdata-dev.homeoffice.gov.uk"
+        },
+        {
+          "{$.staffDetailsContext.staffId}": "{{guid}}"
+        },
+        {
+          "{$.keycloakContext.givenName}": "{{firstName}}"
+        },
+        {
+          "{$.keycloakContext.familyName}": "{{lastName}}"
+        }
+      ]
+    },
+    {
+      "id": "copdev",
+      "label": "COP Dev",
+      "url": "https://private-formio.dev.cop.homeoffice.gov.uk",
+      "description": "Central Operations Platform - Dev Environment",
+      "service": {
+        "formio": {
+          "username": "border-force-support@homeoffice.gov.uk",
+          "password": "Fr33D3M0ABCr"
+        },
+        "keycloak": {
+          "tokenUrl": "https://sso-dev.notprod.homeoffice.gov.uk/auth/realms/cop-dev/protocol/openid-connect/token",
+          "clientId": "formbuilderservice",
+          "secret": "68252b8a-5e9a-4434-b429-ca3ca105e62f"
+        }
       },
-      {
-        "{$.staffDetailsContext.staffId}": "{{guid}}"
-      },
-      {
-        "{$.keycloakContext.givenName}": "{{firstName}}"
-      },
-      {
-        "{$.keycloakContext.familyName}": "{{lastName}}"
-      }
-    ]
+      "editable": true,
+      "variable-replacements": [
+        {
+          "{$.environmentContext.operationalDataUrl}": "https://private-postgrest.dev.cop.homeoffice.gov.uk"
+        },
+        {
+          "{$.environmentContext.referenceDataUrl}": "https://api.refdata-dev.homeoffice.gov.uk"
+        },
+        {
+          "{$.environmentContext.workflowUrl}": "https://private-workflow-engine.dev.cop.homeoffice.gov.uk"
+        },
+        {
+          "{$.staffDetailsContext.staffId}": "{{guid}}"
+        },
+        {
+          "{$.keycloakContext.givenName}": "{{firstName}}"
+        },
+        {
+          "{$.keycloakContext.familyName}": "{{lastName}}"
+        },
+        {
+          "{$.keycloakContext.email}": "{{email}}"
+        },
+        {
+          "{$.keycloakContext.userName}": "{{email}}"
+        }
+      ]
     }
   ],
   "gov-uk-enabled" : true,
   "keycloak": {
-    "authUrl": "https://keycloak.example.com/auth",
+    "authUrl": "https://keycloak.elf79.dev/auth",
     "clientId": "platform-ui",
-    "realm": "dev"
+    "realm": "elf"
   }
 }
+
+
+ingress.kubernetes.io/whitelist-source-range: 82.69.53.3/32,81.187.64.33/32,213.251.23.185/32,213.251.23.186/32,213.251.23.187/32,213.251.23.188/32,35.176.101.18/32,35.176.101.73/32,35.176.58.181/32,35.176.168.231/32,52.56.158.209/32,35.177.248.60/32,35.177.82.170/32,35.176.70.245/32,52.56.249.216/32,62.25.109.196/32,62.60.12.217/32,51.231.79.168/32,51.231.79.169/32,51.231.79.170/32,51.231.79.171/32,51.231.79.172/32,51.130.92.35/32,51.130.92.36/32,51.130.92.37/32,51.130.92.38/32,51.130.92.39/32,51.130.92.40/32,51.63.27.67/32,51.63.27.131/32,52.48.127.144/28,52.209.62.128/25,52.56.62.128/25,52.56.221.216/32,18.130.11.142/32,18.130.6.5/32,81.2.119.240/28

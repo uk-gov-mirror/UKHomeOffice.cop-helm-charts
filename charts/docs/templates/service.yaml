@@ -1,15 +1,15 @@
-{{- $service := .Values.formbuilder.service -}}
+{{- $service := .Values.docs.service -}}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "formbuilder.fullname" . }}
+  name: {{ template "docs.fullname" . }}
 {{- with $service.annotations }}
   annotations:
 {{ toYaml . | indent 4 }}
 {{- end }}
   labels:
-    app.kubernetes.io/name: {{ include "formbuilder.name" . }}
-    helm.sh/chart: {{ include "formbuilder.chart" . }}
+    app.kubernetes.io/name: {{ include "docs.name" . }}
+    helm.sh/chart: {{ include "docs.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- with $service.labels }}
@@ -27,4 +27,4 @@ spec:
       protocol: TCP
   selector:
     app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/name: {{ template "formbuilder.name" . }}
+    app.kubernetes.io/name: {{ template "docs.name" . }}

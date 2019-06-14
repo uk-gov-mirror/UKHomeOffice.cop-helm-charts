@@ -1,3 +1,22 @@
+certs:
+  image:
+    repository: quay.io/ukhomeofficedigital/borders-cfssl-sidekick
+    tag: bd4901b5a28c
+    pullPolicy: Always
+  internalCaUrl: https://ca.kube-tls.svc.cluster.local
+
+proxy:
+  image:
+    repository: quay.io/ukhomeofficedigital/nginx-proxy
+    tag: latest
+    pullPolicy: Always
+  env:
+    port: 8080
+    noLoggingUrlParams: "FALSE"
+    noLoggingBody: "FALSE"
+    noLoggingResponse: "FALSE"
+    statsdMetrics: "TRUE"
+
 formbuilder:
   replicaCount: 1
   imageCredentials:
@@ -26,8 +45,8 @@ formbuilder:
   resources: {}
   service:
     type: ClusterIP
-    port: 80
-    targetPort: 8080
+    port: 443
+    targetPort: 10443
   ingress:
     enabled: false
     namespace: nginx-external

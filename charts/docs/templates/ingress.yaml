@@ -1,17 +1,16 @@
-{{- $ingress := .Values.formbuilder.ingress -}}
-{{- $service := .Values.formbuilder.service -}}
+{{- $ingress := .Values.docs.ingress -}}
 {{- if $ingress.enabled -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ template "formbuilder.fullname" . }}
+  name: {{ template "docs.fullname" . }}
 {{- with $ingress.annotations }}
   annotations:
 {{ toYaml . | indent 4 }}
 {{- end }}
   labels:
-    app.kubernetes.io/name: {{ include "formbuilder.name" . }}
-    helm.sh/chart: {{ include "formbuilder.chart" . }}
+    app.kubernetes.io/name: {{ include "docs.name" . }}
+    helm.sh/chart: {{ include "docs.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- with $ingress.labels }}
@@ -35,7 +34,7 @@ spec:
         paths:
           - path: {{ $ingress.path }}
             backend:
-              serviceName: {{ template "formbuilder.fullname" $ }}
-              servicePort: {{ $service.port }}
+              serviceName: {{ template "docs.fullname" $ }}
+              servicePort: http
   {{- end }}
 {{- end -}}
